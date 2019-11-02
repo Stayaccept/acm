@@ -13,19 +13,3 @@ ull Hash(char s[]){
     ans=(ans*base+(ull)s[i])%mod;
     return ans;
 }
-int main(){
-    int i,n,ans;
-    scanf("%d",&n);
-    for(i=0;i<n;i++){
-        scanf("%s",s);
-        a[i]=Hash(s);
-    }
-    sort(a,a+n);
-    ans=1;
-    for(i=1;i<n;i++){
-        if(a[i]!=a[i-1])
-        ans++;
-    }
-    printf("%d\n",ans);
-    return 0;
-}
