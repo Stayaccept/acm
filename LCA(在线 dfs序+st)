@@ -1,0 +1,43 @@
+#include<bits/stdc++.h>
+using namespace std;
+
+const int siz=500005;
+int rt;
+vector<int> G[siz];
+int dfn[siz<<1],dep[siz<<1],first[siz<<1],dp[siz<<1][20];
+int judge(int u,int v){
+    if(dep[u]<dep[v])
+    return u;
+    return v;
+}
+void dfs(int u,int d,int fa){
+    int i,v;
+    dfn[++rt]=u,dep[rt]=d,first[u]=rt;
+    for(i=0;i<G[u].size();i++){
+        v=G[u][i];
+        if(v==fa)
+        continue;
+        dfs(v,d+1,u);
+        dfn[++rt]=u,dep[rt]=d;
+    }
+}
+void init(int u){
+    int i,j;
+    dfs(u,1,-1);
+    for(i=1;i<=rt;i++)
+    dp[i][0]=i;
+    for(i=1;(1<<i)<=rt;i++){
+        for(j=1;j+(1<<i)-1<=rt;j++){
+            dp[j][i]=judge(dp[j][i-1],dp[j+(1<<(i-1))][i-1]);
+        }
+    }
+}
+int query(int u,int v){
+    int k=0;
+    u=first[u],v=first[v];
+    if(u>v)
+    swap(u,v);
+    while((1<<(k+1))<=(v-u+1))
+    k++;
+    return judge(dp[u][k],dp[v-(1<<k)+1][k]);
+}
