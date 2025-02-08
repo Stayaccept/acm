@@ -42,6 +42,16 @@ void merge_sort(vector<T> &a) {
     }
 }
 
+// 归并排序，递归
+template<typename T>
+void merge_sort(vector<T> &a, int l, int r) {
+    if (l >= r) return;
+    int mid = (l + r) / 2;
+    merge_sort(a, l, mid);
+    merge_sort(a, mid + 1, r);
+    merge(a, l, mid, r);
+}
+
 int main() {
     int n, tmp;
     vector<int> a;
@@ -51,7 +61,7 @@ int main() {
         a.push_back(tmp);
     }
 
-    merge_sort(a);
+    merge_sort(a, 0, n - 1);
 
     for (int i = 0; i < a.size(); i++) {
         if (i != 0) putchar(' ');
@@ -60,3 +70,9 @@ int main() {
     putchar('\n');
     return 0;
 }
+
+/*
+5
+4 3 1 2 5
+*/
+
